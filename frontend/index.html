@@ -3,137 +3,269 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bank Management System</title>
+    <title>BANK | Management Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="app-shell">
-      <aside class="sidebar">
-        <div class="brand">
-          <span class="brand-mark">B</span>
+    <div class="dashboard-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand-row">
+          <div class="brand-mark">B</div>
           <div>
             <strong>BANK</strong>
-            <span>Branch console</span>
+            <span>Management System</span>
           </div>
         </div>
 
-        <nav class="nav-list" aria-label="Primary">
-          <a class="active" href="#dashboard">Dashboard</a>
-          <a href="#transactions">Transactions</a>
-          <a href="#customers">Customers</a>
-          <a href="#support">Support</a>
+        <nav class="nav-menu" aria-label="Dashboard navigation">
+          <a href="#overview" class="nav-link active" data-view="overview">
+            <span>Dashboard</span>
+          </a>
+          <a href="#transactions" class="nav-link" data-view="transactions">
+            <span>Transactions</span>
+          </a>
+          <a href="#customers" class="nav-link" data-view="customers">
+            <span>Customers</span>
+          </a>
+          <a href="#accounts" class="nav-link" data-view="accounts">
+            <span>Accounts</span>
+          </a>
+          <a href="#settings" class="nav-link" data-view="settings">
+            <span>Settings</span>
+          </a>
         </nav>
 
-        <div class="sample-box">
-          <span class="label">Sample users</span>
-          <button class="sample-account" type="button" data-account="1">Alice / password1</button>
-          <button class="sample-account" type="button" data-account="2">Bob / password2</button>
-          <button class="sample-account" type="button" data-account="3">Charlie / password3</button>
+        <div class="sidebar-note">
+          <span class="note-label">Supabase Ready</span>
+          <p>Connect your tables later and bind data into the prepared UI states.</p>
         </div>
       </aside>
 
-      <main>
+      <div class="main-area">
         <header class="topbar">
+          <button class="menu-button" id="menuButton" type="button" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+
           <div>
-            <p class="eyebrow">Mini Transaction Engine</p>
-            <h1>Bank management dashboard</h1>
+            <p class="section-label">Branch Operations</p>
+            <h1>Bank dashboard</h1>
           </div>
-          <div class="status-pill" id="sessionStatus">No active session</div>
+
+          <div class="topbar-actions">
+            <label class="search-box">
+              <span>Search</span>
+              <input type="search" placeholder="Customer, account, transaction" />
+            </label>
+            <button class="secondary-button" type="button">Export</button>
+            <button class="primary-button" type="button">New Customer</button>
+          </div>
         </header>
 
-        <section class="hero-band" id="dashboard">
-          <div>
-            <p class="eyebrow">Current account</p>
-            <h2 id="activeAccountName">Sign in to manage funds</h2>
-            <p id="activeAccountMeta">Use one of the seeded customers from the Python backend.</p>
-          </div>
-          <div class="balance-panel">
-            <span>Available balance</span>
-            <strong id="balanceValue">Rs 0.00</strong>
-          </div>
-        </section>
-
-        <section class="workspace">
-          <div class="panel login-panel">
-            <div class="panel-heading">
-              <div>
-                <p class="eyebrow">Authentication</p>
-                <h2>Customer login</h2>
-              </div>
-              <button id="resetDemo" class="icon-button" type="button" title="Reset demo data">↻</button>
-            </div>
-
-            <form id="loginForm" class="form-grid">
-              <label>
-                Account number
-                <input id="accountNumber" name="accountNumber" inputmode="numeric" placeholder="1" required />
-              </label>
-              <label>
-                Password
-                <input id="password" name="password" type="password" placeholder="password1" required />
-              </label>
-              <button type="submit" class="primary-button">Sign in</button>
-              <button id="logoutButton" type="button" class="ghost-button">Sign out</button>
-            </form>
-            <p class="feedback" id="loginFeedback" role="status"></p>
-          </div>
-
-          <div class="panel actions-panel">
-            <div class="panel-heading">
-              <div>
-                <p class="eyebrow">Money movement</p>
-                <h2>Deposit, withdraw, transfer</h2>
+        <main>
+          <section class="hero-panel" id="overview">
+            <div class="hero-content">
+              <p class="section-label">Live Financial Workspace</p>
+              <h2>Manage customers, accounts, and money movement from one responsive interface.</h2>
+              <p>
+                This frontend is intentionally data-source neutral. Add your Supabase fetch, insert,
+                update, and auth logic in <code>frontend/app.js</code> when your schema is ready.
+              </p>
+              <div class="hero-actions">
+                <button class="primary-button" type="button" data-scroll="#transactions">Start Transaction</button>
+                <button class="secondary-button light" type="button" data-scroll="#customers">View Customers</button>
               </div>
             </div>
 
-            <div class="segmented" role="tablist" aria-label="Transaction type">
-              <button class="active" type="button" data-mode="deposit">Deposit</button>
-              <button type="button" data-mode="withdraw">Withdraw</button>
-              <button type="button" data-mode="transfer">Transfer</button>
-            </div>
-
-            <form id="transactionForm" class="form-grid">
-              <label id="receiverField" class="hidden">
-                Receiver account
-                <select id="receiverAccount" name="receiverAccount"></select>
-              </label>
-              <label>
-                Amount
-                <input id="amount" name="amount" inputmode="decimal" placeholder="500" required />
-              </label>
-              <button type="submit" class="primary-button">Run transaction</button>
-            </form>
-            <p class="feedback" id="transactionFeedback" role="status"></p>
-          </div>
-        </section>
-
-        <section class="data-grid">
-          <div class="panel" id="transactions">
-            <div class="panel-heading">
-              <div>
-                <p class="eyebrow">Ledger</p>
-                <h2>Recent activity</h2>
+            <div class="balance-card">
+              <span>Portfolio balance</span>
+              <strong data-bind="total-balance">--</strong>
+              <small>Waiting for Supabase data</small>
+              <div class="mini-chart" aria-hidden="true">
+                <span style="height: 38%"></span>
+                <span style="height: 52%"></span>
+                <span style="height: 44%"></span>
+                <span style="height: 70%"></span>
+                <span style="height: 63%"></span>
+                <span style="height: 82%"></span>
+                <span style="height: 74%"></span>
               </div>
             </div>
-            <div class="timeline" id="timeline"></div>
-          </div>
+          </section>
 
-          <div class="panel" id="customers">
-            <div class="panel-heading">
+          <section class="metric-grid" aria-label="Bank metrics">
+            <article class="metric-card">
+              <span>Total Customers</span>
+              <strong data-bind="customer-count">--</strong>
+              <small>Bind from customer table</small>
+            </article>
+            <article class="metric-card">
+              <span>Active Accounts</span>
+              <strong data-bind="account-count">--</strong>
+              <small>Bind from accounts/balance table</small>
+            </article>
+            <article class="metric-card">
+              <span>Today's Transfers</span>
+              <strong data-bind="transfer-count">--</strong>
+              <small>Bind from transactions table</small>
+            </article>
+            <article class="metric-card warning">
+              <span>Review Queue</span>
+              <strong data-bind="review-count">--</strong>
+              <small>Optional approval workflow</small>
+            </article>
+          </section>
+
+          <section class="content-grid">
+            <article class="panel transaction-panel" id="transactions">
+              <div class="panel-header">
+                <div>
+                  <p class="section-label">Money Movement</p>
+                  <h2>Transaction console</h2>
+                </div>
+                <div class="mode-switch" role="tablist" aria-label="Transaction type">
+                  <button class="active" type="button" data-mode="deposit">Deposit</button>
+                  <button type="button" data-mode="withdraw">Withdraw</button>
+                  <button type="button" data-mode="transfer">Transfer</button>
+                </div>
+              </div>
+
+              <form class="transaction-form" id="transactionForm">
+                <label>
+                  Account number
+                  <input name="accountNumber" inputmode="numeric" placeholder="Enter account number" required />
+                </label>
+
+                <label class="receiver-field is-hidden" id="receiverField">
+                  Receiver account
+                  <input name="receiverAccount" inputmode="numeric" placeholder="Enter receiver account" />
+                </label>
+
+                <label>
+                  Amount
+                  <input name="amount" inputmode="decimal" placeholder="0.00" required />
+                </label>
+
+                <label>
+                  Reference
+                  <input name="reference" placeholder="Optional note" />
+                </label>
+
+                <button class="primary-button wide" type="submit">Prepare Transaction</button>
+              </form>
+
+              <div class="form-result" id="formResult" role="status">
+                Form is ready. Add Supabase mutation logic when your backend tables are connected.
+              </div>
+            </article>
+
+            <article class="panel activity-panel">
+              <div class="panel-header">
+                <div>
+                  <p class="section-label">Activity</p>
+                  <h2>Recent transactions</h2>
+                </div>
+                <button class="text-button" type="button">Refresh</button>
+              </div>
+
+              <div class="empty-state">
+                <div class="empty-icon">TX</div>
+                <h3>No transactions loaded</h3>
+                <p>After you connect Supabase, render deposits, withdrawals, and transfers here.</p>
+              </div>
+            </article>
+          </section>
+
+          <section class="panel table-panel" id="customers">
+            <div class="panel-header">
               <div>
-                <p class="eyebrow">Customers</p>
-                <h2>Seeded accounts</h2>
+                <p class="section-label">Customer Service</p>
+                <h2>Customer directory</h2>
+              </div>
+              <div class="panel-actions">
+                <button class="secondary-button" type="button">Filter</button>
+                <button class="primary-button" type="button">Add Account</button>
               </div>
             </div>
-            <div class="customer-list" id="customerList"></div>
-          </div>
-        </section>
 
-        <section class="support-strip" id="support">
-          <strong>Frontend mapped from the Python project:</strong>
-          <span>login, balance lookup, deposit, withdrawal, transfer, seeded customers, and local transaction history.</span>
-        </section>
-      </main>
+            <div class="responsive-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Customer</th>
+                    <th>Account No.</th>
+                    <th>Branch</th>
+                    <th>Status</th>
+                    <th>Balance</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="customerRows">
+                  <tr class="empty-row">
+                    <td colspan="6">
+                      <div class="table-empty">
+                        <strong>No customer records loaded</strong>
+                        <span>Connect Supabase and map your customer rows into this table.</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="bottom-grid" id="accounts">
+            <article class="panel">
+              <div class="panel-header">
+                <div>
+                  <p class="section-label">Account Health</p>
+                  <h2>Balance overview</h2>
+                </div>
+              </div>
+              <div class="progress-list">
+                <div>
+                  <span>Savings accounts</span>
+                  <strong>--</strong>
+                  <div class="progress"><span style="width: 72%"></span></div>
+                </div>
+                <div>
+                  <span>Current accounts</span>
+                  <strong>--</strong>
+                  <div class="progress accent"><span style="width: 48%"></span></div>
+                </div>
+                <div>
+                  <span>New onboarding</span>
+                  <strong>--</strong>
+                  <div class="progress warm"><span style="width: 58%"></span></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel" id="settings">
+              <div class="panel-header">
+                <div>
+                  <p class="section-label">Integration</p>
+                  <h2>Supabase mapping</h2>
+                </div>
+              </div>
+              <div class="mapping-list">
+                <div><span>customer</span><strong>Profile and login fields</strong></div>
+                <div><span>balance</span><strong>Account balance display</strong></div>
+                <div><span>transactions</span><strong>Ledger and activity feed</strong></div>
+                <div><span>branch_details</span><strong>Branch metadata</strong></div>
+              </div>
+            </article>
+          </section>
+        </main>
+      </div>
     </div>
 
     <script src="./app.js"></script>

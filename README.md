@@ -1,24 +1,18 @@
 # BANK
 
-Bank management system with a Python SQLite transaction engine and a static frontend dashboard.
+Bank management system with a Python SQLite transaction engine and a modern responsive frontend dashboard.
 
 ## Frontend
 
 Open `frontend/index.html` in a browser.
 
-The frontend mirrors the current backend workflows:
+The frontend is ready for Supabase integration and includes polished screens for:
 
-- Customer login using seeded accounts
 - Balance lookup
 - Deposit
 - Withdraw
 - Transfer
 - Recent transaction history
+- Customer and account management
 
-Sample credentials:
-
-- Account `1`, password `password1`
-- Account `2`, password `password2`
-- Account `3`, password `password3`
-
-Demo balances and transactions are stored in browser local storage.
+No Supabase keys, URLs, mock customers, or hardcoded database records are included. Add your Supabase client and table queries inside `frontend/app.js` when your schema is ready.
