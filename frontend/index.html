@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bank Management System</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand-mark">B</span>
+          <div>
+            <strong>BANK</strong>
+            <span>Branch console</span>
+          </div>
+        </div>
+
+        <nav class="nav-list" aria-label="Primary">
+          <a class="active" href="#dashboard">Dashboard</a>
+          <a href="#transactions">Transactions</a>
+          <a href="#customers">Customers</a>
+          <a href="#support">Support</a>
+        </nav>
+
+        <div class="sample-box">
+          <span class="label">Sample users</span>
+          <button class="sample-account" type="button" data-account="1">Alice / password1</button>
+          <button class="sample-account" type="button" data-account="2">Bob / password2</button>
+          <button class="sample-account" type="button" data-account="3">Charlie / password3</button>
+        </div>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Mini Transaction Engine</p>
+            <h1>Bank management dashboard</h1>
+          </div>
+          <div class="status-pill" id="sessionStatus">No active session</div>
+        </header>
+
+        <section class="hero-band" id="dashboard">
+          <div>
+            <p class="eyebrow">Current account</p>
+            <h2 id="activeAccountName">Sign in to manage funds</h2>
+            <p id="activeAccountMeta">Use one of the seeded customers from the Python backend.</p>
+          </div>
+          <div class="balance-panel">
+            <span>Available balance</span>
+            <strong id="balanceValue">Rs 0.00</strong>
+          </div>
+        </section>
+
+        <section class="workspace">
+          <div class="panel login-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Authentication</p>
+                <h2>Customer login</h2>
+              </div>
+              <button id="resetDemo" class="icon-button" type="button" title="Reset demo data">↻</button>
+            </div>
+
+            <form id="loginForm" class="form-grid">
+              <label>
+                Account number
+                <input id="accountNumber" name="accountNumber" inputmode="numeric" placeholder="1" required />
+              </label>
+              <label>
+                Password
+                <input id="password" name="password" type="password" placeholder="password1" required />
+              </label>
+              <button type="submit" class="primary-button">Sign in</button>
+              <button id="logoutButton" type="button" class="ghost-button">Sign out</button>
+            </form>
+            <p class="feedback" id="loginFeedback" role="status"></p>
+          </div>
+
+          <div class="panel actions-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Money movement</p>
+                <h2>Deposit, withdraw, transfer</h2>
+              </div>
+            </div>
+
+            <div class="segmented" role="tablist" aria-label="Transaction type">
+              <button class="active" type="button" data-mode="deposit">Deposit</button>
+              <button type="button" data-mode="withdraw">Withdraw</button>
+              <button type="button" data-mode="transfer">Transfer</button>
+            </div>
+
+            <form id="transactionForm" class="form-grid">
+              <label id="receiverField" class="hidden">
+                Receiver account
+                <select id="receiverAccount" name="receiverAccount"></select>
+              </label>
+              <label>
+                Amount
+                <input id="amount" name="amount" inputmode="decimal" placeholder="500" required />
+              </label>
+              <button type="submit" class="primary-button">Run transaction</button>
+            </form>
+            <p class="feedback" id="transactionFeedback" role="status"></p>
+          </div>
+        </section>
+
+        <section class="data-grid">
+          <div class="panel" id="transactions">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Ledger</p>
+                <h2>Recent activity</h2>
+              </div>
+            </div>
+            <div class="timeline" id="timeline"></div>
+          </div>
+
+          <div class="panel" id="customers">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Customers</p>
+                <h2>Seeded accounts</h2>
+              </div>
+            </div>
+            <div class="customer-list" id="customerList"></div>
+          </div>
+        </section>
+
+        <section class="support-strip" id="support">
+          <strong>Frontend mapped from the Python project:</strong>
+          <span>login, balance lookup, deposit, withdrawal, transfer, seeded customers, and local transaction history.</span>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
