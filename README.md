@@ -16,3 +16,7 @@ The frontend is ready for Supabase integration and includes polished screens for
 - Customer and account management
 
 No Supabase keys, URLs, mock customers, or hardcoded database records are included. Add your Supabase client and table queries inside `frontend/app.js` when your schema is ready.
+
+
+
+hello github hands on.
