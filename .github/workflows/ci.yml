@@ -1,0 +1,38 @@
+name: "BANK SEVA CI/CD Pipeline"
+
+on:
+  push:
+    branches:
+      - main
+      - ann
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: "backend name"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: "actions/checkout@v4"
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check Python Version
+        run: python --version
+      - name: Run Bank Application
+        run: python MAIN/main.py
+  test:
+    name: "Test"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: "actions/checkout@v4"
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install pytest
+      - name: Run tests
+        run: pytest
