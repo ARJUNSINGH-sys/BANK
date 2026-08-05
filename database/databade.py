@@ -1,4 +1,6 @@
+import os
 import sqlite3
+from pathlib import Path
 
 
 class Database:
@@ -15,7 +17,7 @@ class Database:
 
     def __init__(self, branch: str):
         try:
-            self.connection = sqlite3.connect(branch)
+            self.connection = sqlite3.connect(branch, check_same_thread=False)
             self.cursor = self.connection.cursor()
             print("Database connected!")
         except sqlite3.Error:
@@ -24,10 +26,11 @@ class Database:
 
     def execute_(self, sql: str, *params):
         """Execute SQL with optional parameters and return the cursor."""
+        cursor = self.connection.cursor()
         if params:
-            cur = self.cursor.execute(sql, params)
+            cur = cursor.execute(sql, params)
         else:
-            cur = self.cursor.execute(sql)
+            cur = cursor.execute(sql)
         return cur
 
     def fetchone_(self, sql: str, *params):
@@ -47,5 +50,8 @@ class Database:
         return self.connection.close()
 
 
-# Single shared Database instance (use this or create your own explicitly).
-db = Database("branch.db")
+# SQLite is the only database used by this application. The path can be
+# overridden for containers with DATABASE_PATH (for example, /data/branch.db).
+DEFAULT_DATABASE_PATH = Path(__file__).resolve().parents[1] / "branch.db"
+DATABASE_PATH = os.getenv("DATABASE_PATH", str(DEFAULT_DATABASE_PATH))
+db = Database(DATABASE_PATH)

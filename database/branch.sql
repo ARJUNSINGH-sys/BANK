@@ -62,4 +62,15 @@ CREATE TABLE IF NOT EXISTS balance(
     ID_no INTEGER,
     balance INTEGER,
     FOREIGN KEY (ID_no) REFERENCES customer(ID_no)
-)
+);
+
+CREATE TABLE IF NOT EXISTS transactions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    account_no INTEGER,
+    type VARCHAR(20),
+    amount REAL,
+    receiver_account INTEGER,
+    reference VARCHAR(255),
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_no) REFERENCES customer(ID_no)
+);

@@ -3,51 +3,79 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BANK | Management Dashboard</title>
+    <title>Seva Bank | State Banking Portal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <div class="dashboard-shell">
+      <!-- Sidebar -->
       <aside class="sidebar" id="sidebar">
         <div class="brand-row">
-          <div class="brand-mark">B</div>
-          <div>
-            <strong>BANK</strong>
-            <span>Management System</span>
+          <div class="brand-emblem" title="Seva Bank Emblem">
+            <svg viewBox="0 0 100 100" class="keyhole-svg">
+              <circle cx="50" cy="50" r="45" fill="#00A3E0" />
+              <circle cx="50" cy="50" r="18" fill="#002B49" />
+              <rect x="44" y="50" width="12" height="36" fill="#002B49" />
+            </svg>
+          </div>
+          <div class="brand-title">
+            <strong>SEVA BANK</strong>
+            <span>State Banking Portal</span>
+          </div>
+        </div>
+
+        <div class="active-account-card">
+          <div class="account-card-header">
+            <span class="badge-tag">ACTIVE SESSION</span>
+            <button class="icon-button" id="switchAccountBtn" type="button" title="Switch User / Login">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+            </button>
+          </div>
+          <p class="user-name" id="sessionUserName">Alice (Account #1)</p>
+          <p class="user-subtext">Pass: <code id="sessionUserPass">password1</code></p>
+          <div class="balance-mini-row">
+            <span>Balance:</span>
+            <strong id="sessionUserBalance">₹1,000.00</strong>
           </div>
         </div>
 
         <nav class="nav-menu" aria-label="Dashboard navigation">
           <a href="#overview" class="nav-link active" data-view="overview">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
             <span>Dashboard</span>
           </a>
           <a href="#transactions" class="nav-link" data-view="transactions">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
             <span>Transactions</span>
           </a>
           <a href="#customers" class="nav-link" data-view="customers">
-            <span>Customers</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <span>Customer Directory</span>
           </a>
-          <a href="#accounts" class="nav-link" data-view="accounts">
-            <span>Accounts</span>
-          </a>
-          <a href="#settings" class="nav-link" data-view="settings">
-            <span>Settings</span>
+          <a href="#activity" class="nav-link" data-view="activity">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            <span>Activity Feed</span>
           </a>
         </nav>
 
-        <div class="sidebar-note">
-          <span class="note-label">Supabase Ready</span>
-          <p>Connect your tables later and bind data into the prepared UI states.</p>
+        <div class="sidebar-footer">
+          <span class="security-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            256-Bit SSL Secured
+          </span>
+          <p class="footer-note">Seva Banking Core v1.0 connected to FastAPI engine.</p>
         </div>
       </aside>
 
+      <!-- Main Content -->
       <div class="main-area">
+        <!-- Top Bar -->
         <header class="topbar">
           <button class="menu-button" id="menuButton" type="button" aria-label="Toggle navigation">
             <span></span>
@@ -55,81 +83,112 @@
             <span></span>
           </button>
 
-          <div>
-            <p class="section-label">Branch Operations</p>
-            <h1>Bank dashboard</h1>
+          <div class="topbar-title">
+            <p class="section-label">National Retail Banking</p>
+            <h1>Branch Operations Dashboard</h1>
           </div>
 
           <div class="topbar-actions">
             <label class="search-box">
-              <span>Search</span>
-              <input type="search" placeholder="Customer, account, transaction" />
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="search" id="globalSearchInput" placeholder="Search customer, account #..." />
             </label>
-            <button class="secondary-button" type="button">Export</button>
-            <button class="primary-button" type="button">New Customer</button>
+            <button class="secondary-button" id="refreshBtn" type="button" title="Refresh API data">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+              Refresh
+            </button>
+            <button class="primary-button" id="openNewCustomerModalBtn" type="button">
+              + New Customer
+            </button>
           </div>
         </header>
 
-        <main>
+        <main class="main-content">
+          <!-- Hero Section -->
           <section class="hero-panel" id="overview">
             <div class="hero-content">
-              <p class="section-label">Live Financial Workspace</p>
-              <h2>Manage customers, accounts, and money movement from one responsive interface.</h2>
+              <p class="section-label">State Banking Network</p>
+              <h2>Seamless Banking, Instant Money Movement & Account Control.</h2>
               <p>
-                This frontend is intentionally data-source neutral. Add your Supabase fetch, insert,
-                update, and auth logic in <code>frontend/app.js</code> when your schema is ready.
+                Experience fast, secure deposit, withdrawal, and inter-bank transfers powered by our live FastAPI backend.
               </p>
               <div class="hero-actions">
                 <button class="primary-button" type="button" data-scroll="#transactions">Start Transaction</button>
-                <button class="secondary-button light" type="button" data-scroll="#customers">View Customers</button>
+                <button class="secondary-button light" type="button" data-scroll="#customers">View Directory</button>
               </div>
             </div>
 
             <div class="balance-card">
-              <span>Portfolio balance</span>
-              <strong data-bind="total-balance">--</strong>
-              <small>Waiting for Supabase data</small>
+              <span class="card-label">Total Vault Balance</span>
+              <strong id="totalVaultBalance" class="balance-text">₹0.00</strong>
+              <small class="card-subtext">Live vault reserve across branch accounts</small>
               <div class="mini-chart" aria-hidden="true">
-                <span style="height: 38%"></span>
-                <span style="height: 52%"></span>
-                <span style="height: 44%"></span>
+                <span style="height: 45%"></span>
+                <span style="height: 60%"></span>
+                <span style="height: 50%"></span>
+                <span style="height: 80%"></span>
                 <span style="height: 70%"></span>
-                <span style="height: 63%"></span>
-                <span style="height: 82%"></span>
-                <span style="height: 74%"></span>
+                <span style="height: 95%"></span>
+                <span style="height: 85%"></span>
               </div>
             </div>
           </section>
 
+          <!-- Metric Grid -->
           <section class="metric-grid" aria-label="Bank metrics">
             <article class="metric-card">
-              <span>Total Customers</span>
-              <strong data-bind="customer-count">--</strong>
-              <small>Bind from customer table</small>
+              <div class="metric-icon blue">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+              </div>
+              <div>
+                <span>Total Customers</span>
+                <strong id="metricCustomerCount">--</strong>
+                <small>Registered branch profiles</small>
+              </div>
             </article>
+
             <article class="metric-card">
-              <span>Active Accounts</span>
-              <strong data-bind="account-count">--</strong>
-              <small>Bind from accounts/balance table</small>
+              <div class="metric-icon cyan">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+              </div>
+              <div>
+                <span>Active Accounts</span>
+                <strong id="metricActiveAccounts">--</strong>
+                <small>Accounts with active funds</small>
+              </div>
             </article>
+
             <article class="metric-card">
-              <span>Today's Transfers</span>
-              <strong data-bind="transfer-count">--</strong>
-              <small>Bind from transactions table</small>
+              <div class="metric-icon gold">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+              </div>
+              <div>
+                <span>Recorded Transactions</span>
+                <strong id="metricTransferCount">--</strong>
+                <small>Deposit, withdraw & transfers</small>
+              </div>
             </article>
-            <article class="metric-card warning">
-              <span>Review Queue</span>
-              <strong data-bind="review-count">--</strong>
-              <small>Optional approval workflow</small>
+
+            <article class="metric-card green">
+              <div class="metric-icon green">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <div>
+                <span>System Status</span>
+                <strong>API Active</strong>
+                <small>FastAPI Engine Online</small>
+              </div>
             </article>
           </section>
 
+          <!-- Content Grid: Transaction Console & Activity -->
           <section class="content-grid">
+            <!-- Transaction Console -->
             <article class="panel transaction-panel" id="transactions">
               <div class="panel-header">
                 <div>
                   <p class="section-label">Money Movement</p>
-                  <h2>Transaction console</h2>
+                  <h2>Transaction Console</h2>
                 </div>
                 <div class="mode-switch" role="tablist" aria-label="Transaction type">
                   <button class="active" type="button" data-mode="deposit">Deposit</button>
@@ -139,60 +198,80 @@
               </div>
 
               <form class="transaction-form" id="transactionForm">
-                <label>
-                  Account number
-                  <input name="accountNumber" inputmode="numeric" placeholder="Enter account number" required />
-                </label>
+                <div class="form-row">
+                  <label>
+                    Account Number
+                    <input name="accountNumber" id="txAccountNo" type="number" placeholder="Enter account #" required />
+                  </label>
+                  <label>
+                    Account Password
+                    <input name="password" id="txPassword" type="password" placeholder="Enter password" required />
+                  </label>
+                </div>
 
                 <label class="receiver-field is-hidden" id="receiverField">
-                  Receiver account
-                  <input name="receiverAccount" inputmode="numeric" placeholder="Enter receiver account" />
+                  Receiver Account Number
+                  <input name="receiverAccount" id="txReceiverNo" type="number" placeholder="Enter target account #" />
                 </label>
 
                 <label>
-                  Amount
-                  <input name="amount" inputmode="decimal" placeholder="0.00" required />
+                  Amount (₹)
+                  <input name="amount" id="txAmount" type="number" step="0.01" min="1" placeholder="0.00" required />
                 </label>
+
+                <div class="quick-amounts" aria-label="Quick amount selection">
+                  <span>Quick Add:</span>
+                  <button type="button" class="chip-btn" data-preset="500">+₹500</button>
+                  <button type="button" class="chip-btn" data-preset="1000">+₹1,000</button>
+                  <button type="button" class="chip-btn" data-preset="5000">+₹5,000</button>
+                  <button type="button" class="chip-btn" data-preset="10000">+₹10,000</button>
+                </div>
 
                 <label>
-                  Reference
-                  <input name="reference" placeholder="Optional note" />
+                  Reference Note (Optional)
+                  <input name="reference" id="txReference" placeholder="e.g., Monthly Savings / Rent" />
                 </label>
 
-                <button class="primary-button wide" type="submit">Prepare Transaction</button>
+                <button class="primary-button wide" type="submit" id="submitTxBtn">
+                  Execute Transaction
+                </button>
               </form>
 
-              <div class="form-result" id="formResult" role="status">
-                Form is ready. Add Supabase mutation logic when your backend tables are connected.
+              <div class="form-result" id="formResult" role="status" data-type="info">
+                Select transaction type and enter credentials to perform instant banking operations.
               </div>
             </article>
 
-            <article class="panel activity-panel">
+            <!-- Activity Panel -->
+            <article class="panel activity-panel" id="activity">
               <div class="panel-header">
                 <div>
-                  <p class="section-label">Activity</p>
-                  <h2>Recent transactions</h2>
+                  <p class="section-label">Ledger Audit</p>
+                  <h2>Recent Transactions</h2>
                 </div>
-                <button class="text-button" type="button">Refresh</button>
+                <button class="text-button" id="refreshActivityBtn" type="button">Refresh Feed</button>
               </div>
 
-              <div class="empty-state">
-                <div class="empty-icon">TX</div>
-                <h3>No transactions loaded</h3>
-                <p>After you connect Supabase, render deposits, withdrawals, and transfers here.</p>
+              <div class="activity-list" id="activityList">
+                <div class="empty-state">
+                  <div class="empty-icon">TX</div>
+                  <h3>No transactions recorded</h3>
+                  <p>Perform your first deposit, withdraw, or transfer to view real-time ledger records.</p>
+                </div>
               </div>
             </article>
           </section>
 
+          <!-- Customer Directory Table -->
           <section class="panel table-panel" id="customers">
             <div class="panel-header">
               <div>
                 <p class="section-label">Customer Service</p>
-                <h2>Customer directory</h2>
+                <h2>Customer Directory</h2>
               </div>
               <div class="panel-actions">
-                <button class="secondary-button" type="button">Filter</button>
-                <button class="primary-button" type="button">Add Account</button>
+                <input type="text" id="customerTableSearch" class="table-search-input" placeholder="Filter by name, ID..." />
+                <button class="primary-button" id="addCustomerBtn" type="button">+ Add Account</button>
               </div>
             </div>
 
@@ -200,20 +279,20 @@
               <table>
                 <thead>
                   <tr>
-                    <th>Customer</th>
-                    <th>Account No.</th>
+                    <th>Acc #</th>
+                    <th>Customer Name</th>
+                    <th>Personal ID</th>
                     <th>Branch</th>
-                    <th>Status</th>
-                    <th>Balance</th>
-                    <th>Action</th>
+                    <th>Contact</th>
+                    <th>Balance (₹)</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody id="customerRows">
                   <tr class="empty-row">
-                    <td colspan="6">
+                    <td colspan="7">
                       <div class="table-empty">
-                        <strong>No customer records loaded</strong>
-                        <span>Connect Supabase and map your customer rows into this table.</span>
+                        <strong>Loading customer records from database...</strong>
                       </div>
                     </td>
                   </tr>
@@ -221,52 +300,128 @@
               </table>
             </div>
           </section>
-
-          <section class="bottom-grid" id="accounts">
-            <article class="panel">
-              <div class="panel-header">
-                <div>
-                  <p class="section-label">Account Health</p>
-                  <h2>Balance overview</h2>
-                </div>
-              </div>
-              <div class="progress-list">
-                <div>
-                  <span>Savings accounts</span>
-                  <strong>--</strong>
-                  <div class="progress"><span style="width: 72%"></span></div>
-                </div>
-                <div>
-                  <span>Current accounts</span>
-                  <strong>--</strong>
-                  <div class="progress accent"><span style="width: 48%"></span></div>
-                </div>
-                <div>
-                  <span>New onboarding</span>
-                  <strong>--</strong>
-                  <div class="progress warm"><span style="width: 58%"></span></div>
-                </div>
-              </div>
-            </article>
-
-            <article class="panel" id="settings">
-              <div class="panel-header">
-                <div>
-                  <p class="section-label">Integration</p>
-                  <h2>Supabase mapping</h2>
-                </div>
-              </div>
-              <div class="mapping-list">
-                <div><span>customer</span><strong>Profile and login fields</strong></div>
-                <div><span>balance</span><strong>Account balance display</strong></div>
-                <div><span>transactions</span><strong>Ledger and activity feed</strong></div>
-                <div><span>branch_details</span><strong>Branch metadata</strong></div>
-              </div>
-            </article>
-          </section>
         </main>
       </div>
     </div>
+
+    <!-- Modals -->
+
+    <!-- User Account Switcher / Quick Login Modal -->
+    <div class="modal-overlay" id="switchAccountModal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Select Active Session Account</h3>
+          <button class="modal-close" id="closeSwitchModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Choose one of the sample accounts to quick-fill credentials or enter custom account info:</p>
+          <div class="sample-account-list" id="sampleAccountList">
+            <!-- Dynamically populated sample accounts -->
+          </div>
+          <hr class="divider" />
+          <form id="customLoginForm" class="modal-form">
+            <h4>Custom Login</h4>
+            <label>
+              Account Number
+              <input type="number" id="customAccNo" placeholder="e.g. 1" required />
+            </label>
+            <label>
+              Password
+              <input type="password" id="customPassword" placeholder="e.g. password1" required />
+            </label>
+            <button type="submit" class="primary-button wide">Set Active Session</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Customer Modal -->
+    <div class="modal-overlay" id="newCustomerModal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Register New Customer Account</h3>
+          <button class="modal-close" id="closeNewCustomerModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="newCustomerForm" class="modal-form">
+            <div class="form-row">
+              <label>
+                Full Name
+                <input name="name" required placeholder="e.g. Rahul Sharma" />
+              </label>
+              <label>
+                Account Password
+                <input name="password" type="password" required placeholder="Set password" />
+              </label>
+            </div>
+            <div class="form-row">
+              <label>
+                Personal ID Type
+                <select name="personal_id_type" required>
+                  <option value="NID">National ID (NID)</option>
+                  <option value="PAN">PAN Card</option>
+                  <option value="AADHAAR">Aadhaar Card</option>
+                  <option value="PASSPORT">Passport</option>
+                </select>
+              </label>
+              <label>
+                Personal ID Number
+                <input name="personal_id" required placeholder="e.g. A1029384" />
+              </label>
+            </div>
+            <div class="form-row">
+              <label>
+                Phone Number
+                <input name="phone_no" required placeholder="e.g. 9876543210" />
+              </label>
+              <label>
+                Email Address
+                <input name="email" type="email" required placeholder="customer@example.com" />
+              </label>
+            </div>
+            <label>
+              Address
+              <input name="address" required placeholder="Street, City, State" />
+            </label>
+            <button type="submit" class="primary-button wide">Create Bank Account</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transaction Receipt Modal -->
+    <div class="modal-overlay" id="receiptModal">
+      <div class="modal-card receipt-card">
+        <div class="receipt-header">
+          <div class="brand-emblem mini">
+            <svg viewBox="0 0 100 100" class="keyhole-svg">
+              <circle cx="50" cy="50" r="45" fill="#00A3E0" />
+              <circle cx="50" cy="50" r="18" fill="#002B49" />
+              <rect x="44" y="50" width="12" height="36" fill="#002B49" />
+            </svg>
+          </div>
+          <h3>Transaction Receipt</h3>
+          <span class="receipt-status success">SUCCESSFUL</span>
+        </div>
+        <div class="receipt-body">
+          <div class="receipt-amount" id="receiptAmount">₹0.00</div>
+          <p class="receipt-type" id="receiptType">DEPOSIT</p>
+          <div class="receipt-details">
+            <div><span>Sender / Account:</span><strong id="receiptAccount">--</strong></div>
+            <div id="receiptReceiverRow" class="is-hidden"><span>Receiver Account:</span><strong id="receiptReceiver">--</strong></div>
+            <div><span>New Account Balance:</span><strong id="receiptBalance">₹0.00</strong></div>
+            <div><span>Reference Note:</span><span id="receiptRef">--</span></div>
+            <div><span>Timestamp:</span><span id="receiptTime">--</span></div>
+          </div>
+        </div>
+        <div class="receipt-footer">
+          <button class="primary-button wide" id="closeReceiptBtn">Done</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer"></div>
 
     <script src="./app.js"></script>
   </body>

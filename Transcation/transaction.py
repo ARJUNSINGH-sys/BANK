@@ -44,7 +44,7 @@ class TransactionEngine:
         return 0 if row is None else row[0]
 
     @authorise
-    def deposit(self, amount):
+    def deposit(self, amount, reference="Cash Deposit"):
         account_no = self._require_login()
         if account_no is None:
             return False
@@ -61,13 +61,14 @@ class TransactionEngine:
             amount,
             account_no,
         )
+        self._record_transaction(account_no, "DEPOSIT", amount, None, reference)
         self.db.commit_()
         balance = self.get_balance(account_no)
         self.logout()
         return balance
 
     @authorise
-    def withdraw(self, amount):
+    def withdraw(self, amount, reference="Cash Withdrawal"):
         account_no = self._require_login()
         if account_no is None:
             return False
@@ -89,13 +90,14 @@ class TransactionEngine:
             amount,
             account_no,
         )
+        self._record_transaction(account_no, "WITHDRAW", amount, None, reference)
         self.db.commit_()
         new_balance = self.get_balance(account_no)
         self.logout()
         return new_balance
 
     @authorise
-    def transfer(self, receiver_account_no, amount):
+    def transfer(self, receiver_account_no, amount, reference="Account Transfer"):
         sender_account = self._require_login()
         if sender_account is None:
             return False
@@ -139,6 +141,7 @@ class TransactionEngine:
             amount,
             receiver_account,
         )
+        self._record_transaction(sender_account, "TRANSFER", amount, receiver_account, reference)
         self.db.commit_()
         result = {
             "sender_balance": self.get_balance(sender_account),
@@ -146,6 +149,55 @@ class TransactionEngine:
         }
         self.logout()
         return result
+
+    def get_history(self, account_no=None, limit=50):
+        try:
+            if account_no:
+                account_no = self._normalize_account(account_no)
+                rows = self.db.fetchall_(
+                    """SELECT id, account_no, type, amount, receiver_account, reference, timestamp 
+                       FROM transactions 
+                       WHERE account_no = ? OR receiver_account = ?
+                       ORDER BY id DESC LIMIT ?""",
+                    account_no,
+                    account_no,
+                    limit,
+                )
+            else:
+                rows = self.db.fetchall_(
+                    """SELECT id, account_no, type, amount, receiver_account, reference, timestamp 
+                       FROM transactions 
+                       ORDER BY id DESC LIMIT ?""",
+                    limit,
+                )
+            return [
+                {
+                    "id": row[0],
+                    "account_no": row[1],
+                    "type": row[2],
+                    "amount": row[3],
+                    "receiver_account": row[4],
+                    "reference": row[5] or "",
+                    "timestamp": str(row[6]),
+                }
+                for row in rows
+            ]
+        except Exception:
+            return []
+
+    def _record_transaction(self, account_no, tx_type, amount, receiver_account=None, reference=""):
+        try:
+            self.db.execute_(
+                """INSERT INTO transactions (account_no, type, amount, receiver_account, reference)
+                   VALUES (?, ?, ?, ?, ?)""",
+                account_no,
+                tx_type,
+                amount,
+                receiver_account,
+                reference,
+            )
+        except Exception:
+            pass
 
     def _require_login(self):
         if self.current_account is None:

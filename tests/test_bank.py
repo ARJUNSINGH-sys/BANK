@@ -36,7 +36,7 @@ def test_initialize_database_creates_required_tables(tmp_path):
             )
         }
 
-    assert {"customer", "balance", "branch_details"}.issubset(tables)
+    assert {"customer", "balance", "branch_details", "transactions"}.issubset(tables)
 
 
 def test_authentication_login_succeeds_for_valid_credentials(bank_db):
@@ -79,27 +79,46 @@ def test_transaction_engine_deposit_and_withdraw(bank_db):
     engine = TransactionEngine(bank_db)
 
     assert engine.login(1, "password1") is True
-    assert engine.deposit(250) == 1250
+    assert engine.deposit(250, reference="Salary Deposit") == 1250
 
     assert engine.login(1, "password1") is True
-    assert engine.withdraw(100) == 1150
+    assert engine.withdraw(100, reference="ATM Cash") == 1150
 
 
 def test_transaction_engine_transfer_between_accounts(bank_db):
     engine = TransactionEngine(bank_db)
 
     assert engine.login(1, "password1") is True
-    result = engine.transfer(2, 200)
+    result = engine.transfer(2, 200, reference="Rent Payment")
 
     assert result["sender_balance"] == 800
     assert result["receiver_balance"] == 1200
 
 
-def test_transaction_engine_requires_login_for_balance(bank_db):
+def test_transaction_engine_logs_history(bank_db):
     engine = TransactionEngine(bank_db)
 
-    assert engine.get_balance(1) == 1000
-    assert engine.current_account is None
+    engine.login(1, "password1")
+    engine.deposit(500, reference="Investment Deposit")
+
+    history = engine.get_history(1)
+    assert len(history) >= 1
+    assert history[0]["type"] == "DEPOSIT"
+    assert history[0]["amount"] == 500.0
+    assert history[0]["reference"] == "Investment Deposit"
+
+
+def test_transaction_engine_fails_on_negative_or_insufficient_funds(bank_db):
+    engine = TransactionEngine(bank_db)
+
+    engine.login(1, "password1")
+    assert engine.deposit(-50) is False
+
+    engine.login(1, "password1")
+    assert engine.withdraw(50000) is False
+
+    engine.login(1, "password1")
+    assert engine.transfer(1, 100) is False  # Self transfer forbidden
 
 
 def test_email_otp_raises_for_missing_password(monkeypatch):

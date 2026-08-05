@@ -1,22 +1,25 @@
 # BANK
 
-Bank management system with a Python SQLite transaction engine and a modern responsive frontend dashboard.
+Bank management system with a FastAPI backend, a SQLite database, and a responsive frontend dashboard. The backend serves the frontend and API from the same origin.
 
-## Frontend
+## Run locally
 
-Open `frontend/index.html` in a browser.
+```powershell
+python -m pip install -r requirement.txt
+uvicorn app.main:app --host 0.0.0.0 --port 8000
+```
 
-The frontend is ready for Supabase integration and includes polished screens for:
+Open http://localhost:8000. SQLite is used exclusively; by default, data is stored in `branch.db` at the project root. Set `DATABASE_PATH` to use another SQLite file.
 
-- Balance lookup
-- Deposit
-- Withdraw
-- Transfer
-- Recent transaction history
-- Customer and account management
+## Run with Docker
 
-No Supabase keys, URLs, mock customers, or hardcoded database records are included. Add your Supabase client and table queries inside `frontend/app.js` when your schema is ready.
+```powershell
+docker build -t bank-seva .
+docker run --rm -p 8000:8000 -v bank-seva-data:/data bank-seva
+```
 
+The image uses `DATABASE_PATH=/data/branch.db`. Mounting `/data` preserves SQLite data across container replacements. `.env` files, local databases, tests, Git metadata, caches, and documentation are excluded from the image; pass any future environment variables at runtime with `--env-file` or `-e`, never by copying them into the image.
 
+## CI
 
-hello github hands on.
+GitHub Actions installs dependencies from `requirement.txt`, runs the test suite, and builds the Docker image on pushes and pull requests to `main`.
