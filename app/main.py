@@ -1,4 +1,4 @@
-from contextlib import asynccontextmanager
+from contextli import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI
